@@ -1,6 +1,8 @@
-import { createContext, SetStateAction, useContext, useRef, useState } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
 import NextButton from './components/NextButton'
+import { Ref, useSectionContext } from './contexts/sectionContext'
+import { useCustomRef } from './hooks/useCustomRef'
 import Contacts from './sections/Contacts'
 import Hero from './sections/Hero'
 import Projects from './sections/Projects'
@@ -9,59 +11,30 @@ const StyledMain = styled.main`
   position: absolute;
 `
 
-type Ref = React.RefObject<HTMLDivElement>
-type ForwardedRef = React.ForwardedRef<HTMLDivElement>
-
-type SectionContext = {
-    setNextSection: ()=>void,
-    setSectionToIndex: (sectionIndex: number)=>void
-    setSectionToRef: (ref:Ref|ForwardedRef)=>void
-}
-
-const SectionContext = createContext({} as SectionContext);
-export function useSectionContext(){
-    return useContext(SectionContext)
-}
-
 function App() {
 
-  const refArray = [] as Ref[]
-  refArray[0] = useRef<HTMLDivElement>(null);
-  refArray[1] = useRef<HTMLDivElement>(null);
-  refArray[2] = useRef<HTMLDivElement>(null);
-  refArray[3] = useRef<HTMLDivElement>(null);
-  const [section, setSection] = useState(refArray[0])
+  const {setNextSection, setSectionToIndex, setSectionToRef, makeRefArray, refArray, section} = useSectionContext()
 
-  function setNextSection(){
-    setSection(prev => refArray[(refArray.findIndex((e)=>e === prev) + 1) % 4])
-    console.log(section)
-  }
+  /* const refArr = [] as Ref[]
 
-  function setSectionToIndex(sectionIndex: number){
-    setSection(refArray[sectionIndex])
-    console.log(section)
-  }
+  for (let i = 0; i < 4; i++) {
+    refArr[i] = useRef(null)
+  } */
 
-  function setSectionToRef(ref: Ref | ForwardedRef){
-    setSection(ref as SetStateAction<Ref>)
-    console.log(section)
-  }
+  const heroRef = useCustomRef("hero")
+  const projRef = useCustomRef("proj")
+  const contRef = useCustomRef("cont")
 
   return (
     <StyledMain>
-      <SectionContext.Provider value={{
-          setNextSection,
-          setSectionToIndex,
-          setSectionToRef
-        }}>
-        <NextButton section={section} />
-        <Hero ref={refArray[0]} />
-        <Projects ref={refArray[1]} />
-        <Contacts ref={refArray[2]} />
-
-      </SectionContext.Provider>
-
-    </StyledMain>
+        <>
+          <NextButton section={section} />
+          <Hero ref={heroRef.ref} reference={heroRef}/>
+          <Projects ref={projRef.ref} reference={projRef}/>
+          <Contacts ref={contRef.ref} reference={contRef}/>
+        </>
+      
+    </StyledMain>    
   )
 }
 

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useSectionContext } from "../App";
+import { useSectionContext } from "../contexts/sectionContext";
+
 
 const StyledFloatingWrapper = styled.div`
     position: fixed;
