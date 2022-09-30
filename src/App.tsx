@@ -1,12 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { StyledMain } from "./styles/App.styles";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./styles/theme.styles";
-import NextButton from "./components/NextButton";
 import { useSectionContext } from "./contexts/sectionContext";
+import NextButton from "./components/NextButton";
 import Contacts from "./sections/Contacts";
 import Hero from "./sections/Hero";
 import Projects from "./sections/Projects";
+import Nav from "./components/Nav";
 
 type Ref = React.RefObject<HTMLDivElement> | null;
 
@@ -31,18 +30,15 @@ function App() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <StyledMain>
-                <NextButton
-                    scrollToNextSection={() =>
-                        scrollToNextSection(currentSection)
-                    }
-                />
-                <Hero ref={heroRef} />
-                <Projects ref={projRef} />
-                <Contacts ref={contRef} />
-            </StyledMain>
-        </ThemeProvider>
+        <StyledMain>
+            <NextButton
+                scrollToNextSection={() => scrollToNextSection(currentSection)}
+            />
+            <Nav />
+            <Hero ref={heroRef} />
+            <Projects ref={projRef} />
+            <Contacts ref={contRef} />
+        </StyledMain>
     );
 }
 
