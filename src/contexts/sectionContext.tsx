@@ -1,69 +1,86 @@
-import { createContext, ReactNode, SetStateAction, useContext, useRef, useState } from "react"
-
-export type Ref = React.RefObject<HTMLDivElement>
-export type ForwardedRef = React.ForwardedRef<HTMLDivElement>
+import {
+    createContext,
+    useContext,
+    ReactNode,
+    useState,
+    useEffect,
+} from "react";
 
 type SectionContext = {
-    setNextSection: ()=>void,
-    setSectionToIndex: (sectionIndex: number)=>void
-    setSectionToRef: (ref:Ref|ForwardedRef)=>void
-    makeRefArray: (amount: number) => Ref[]
-    section: Ref
-    refArray: Ref[]
-}
-
-type Props = {
-    children: ReactNode
-}
+    currentSection: Ref;
+    prevSection: Ref;
+    sectionArray: Ref[];
+    stepToNextSection: () => void;
+    stepToPreviousSection: () => void;
+    getCurrentSectionId: (ref: Ref) => number;
+    initSections: (refArray: Ref[]) => void;
+};
+type Ref = React.RefObject<HTMLDivElement> | null;
 
 const SectionContext = createContext({} as SectionContext);
-export function useSectionContext(){
-    return useContext(SectionContext)
+export function useSectionContext() {
+    return useContext(SectionContext);
 }
 
-const sectionContext = ({children}: Props) => {
+export function SectionContextProvider({ children }: { children: ReactNode }) {
+    const [currentSection, setCurrentSection] = useState<Ref>(null);
+    const [prevSection, setPrevSection] = useState<Ref>(null);
+    const [sectionArray, setSectionArray] = useState<Ref[]>([]);
+    const [count, setCount] = useState(1);
 
-  const [section, setSection] = useState({} as Ref)
-  const [refArray, setRefArray] = useState([] as Ref[])
+    useEffect(() => {
+        setCurrentSection(sectionArray[1]);
+        setPrevSection(sectionArray[0]);
+        console.log(currentSection, "init");
+        console.log(prevSection, "init");
+    }, [sectionArray]);
 
-  function setNextSection(){
-    setSection(prev => refArray[(refArray.findIndex((e)=>e === prev) + 1) % 4])
-    console.log(section)
-  }
-
-  function setSectionToIndex(sectionIndex: number){
-    setSection(refArray[sectionIndex])
-    console.log("setSectionToIndex",section)
-  }
-
-  function setSectionToRef(ref: Ref | ForwardedRef){
-    setSection(ref as SetStateAction<Ref>)
-    console.log("setSectionToRef",section)
-  }
-
-  function makeRefArray(amount: number){
-    const tempArray: Ref[] = []
-    for (let i = 0; i < amount; i++) {
-        tempArray[i] = useRef<HTMLDivElement>(null)
+    function initSections(refArray: Ref[]) {
+        setSectionArray(refArray);
     }
-    /* setRefArray(prev => prev.concat(tempArray)) */
-    console.log(refArray)
-    return tempArray
-  }
 
+    function stepToNextSection() {
+        setCount((prev) => {
+            return (prev + 1) % 3;
+        });
+        setPrevSection(currentSection);
+        setCurrentSection(sectionArray[count]);
 
-  return (
-    <SectionContext.Provider value={{
-        setNextSection,
-        setSectionToIndex,
-        setSectionToRef,
-        makeRefArray,
-        refArray,
-        section
-      }}>
-        {children}
-    </SectionContext.Provider>
-  )
+        console.log("stepping sections", count);
+        console.log("prev", getCurrentSectionId(prevSection));
+        console.log("curr", getCurrentSectionId(currentSection));
+        console.log(sectionArray);
+    }
+    function stepToPreviousSection() {
+        setCount((prev) => {
+            return (prev - 1) % 3;
+        });
+        setPrevSection(currentSection);
+        setCurrentSection(sectionArray[count]);
+
+        console.log("stepping sections", count);
+        console.log("prev", getCurrentSectionId(prevSection));
+        console.log("curr", getCurrentSectionId(currentSection));
+        console.log(sectionArray);
+    }
+
+    function getCurrentSectionId(ref: Ref) {
+        return sectionArray.findIndex((e) => e === ref);
+    }
+
+    return (
+        <SectionContext.Provider
+            value={{
+                initSections,
+                currentSection,
+                sectionArray,
+                stepToNextSection,
+                getCurrentSectionId,
+                stepToPreviousSection,
+                prevSection,
+            }}
+        >
+            {children}
+        </SectionContext.Provider>
+    );
 }
-
-export default sectionContext

@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useSectionContext } from "../contexts/sectionContext";
-
+import React from "react";
 
 const StyledFloatingWrapper = styled.div`
     position: fixed;
@@ -8,21 +7,15 @@ const StyledFloatingWrapper = styled.div`
 `;
 
 type Props = {
-    section: React.RefObject<HTMLDivElement>;
+    scrollToNextSection: () => void;
 };
 
-function NextButton({ section }: Props) {
-    const { setNextSection, setSectionToIndex } = useSectionContext();
-
-    function scrollToNextSection(section: React.RefObject<HTMLDivElement>) {
-        section.current?.scrollIntoView();
-    }
-
+const NextButton = React.forwardRef(({ scrollToNextSection }: Props, ref) => {
     return (
         <StyledFloatingWrapper>
-            <button onClick={() => scrollToNextSection(section)}>{}</button>
+            <button onClick={scrollToNextSection}>{"hey"}</button>
         </StyledFloatingWrapper>
     );
-}
+});
 
 export default NextButton;
