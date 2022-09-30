@@ -1,21 +1,30 @@
-import { forwardRef, ReactNode, useEffect } from "react";
-import { useSectionContext } from "../App";
+import { forwardRef, ReactNode, useEffect, useState } from "react";
+import { useSectionContext } from "../contexts/sectionContext";
 import { useIsInViewport } from "../hooks/useIsInViewport";
-import { StyledSection } from "./Section.styles";
+import { Ref } from "../interfaces/Ref";
+import { StyledSection } from "../styles/Section.styles";
 
 type Props = {
     children: ReactNode;
+    id: number;
 };
 
+/* 
+
+true,false => UP
+false,true => DOWN
+
+*/
+
 const Section = forwardRef<HTMLDivElement, Props>(
-    ({ children }: Props, ref) => {
-        const { setNextSection, setSectionToRef } = useSectionContext();
+    ({ children, id }: Props, ref: any) => {
+        const { setCurrent, setRefArray } = useSectionContext();
         const isInView = useIsInViewport(ref);
 
         useEffect(() => {
             if (isInView) {
-                console.log("inciew");
-                setSectionToRef(ref);
+                setCurrent({ ref: ref, id: id });
+                setRefArray({ ref: ref, id: id });
             }
         }, [isInView]);
 

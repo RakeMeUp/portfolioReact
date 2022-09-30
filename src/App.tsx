@@ -1,68 +1,52 @@
-import { createContext, SetStateAction, useContext, useRef, useState } from 'react'
-import styled from 'styled-components'
-import NextButton from './components/NextButton'
-import Contacts from './sections/Contacts'
-import Hero from './sections/Hero'
-import Projects from './sections/Projects'
-
-const StyledMain = styled.main`
-  position: absolute;
-`
-
-type Ref = React.RefObject<HTMLDivElement>
-type ForwardedRef = React.ForwardedRef<HTMLDivElement>
-
-type SectionContext = {
-    setNextSection: ()=>void,
-    setSectionToIndex: (sectionIndex: number)=>void
-    setSectionToRef: (ref:Ref|ForwardedRef)=>void
-}
-
-const SectionContext = createContext({} as SectionContext);
-export function useSectionContext(){
-    return useContext(SectionContext)
-}
+import { useRef, useState, useEffect } from "react";
+import { StyledMain } from "./styles/App.styles";
+import NextButton from "./components/NextButton";
+import Contacts from "./sections/Contacts";
+import Hero from "./sections/Hero";
+import Projects from "./sections/Projects";
+import Nav from "./components/Nav";
+import { Ref } from "./interfaces/Ref";
+import { useSectionContext } from "./contexts/sectionContext";
+import Section from "./components/Section";
+import TechStack from "./sections/TechStack";
 
 function App() {
+    const heroRef = useRef(null);
+    const projRef = useRef(null);
+    const contRef = useRef(null);
+    const techRef = useRef(null);
 
-  const refArray = [] as Ref[]
-  refArray[0] = useRef<HTMLDivElement>(null);
-  refArray[1] = useRef<HTMLDivElement>(null);
-  refArray[2] = useRef<HTMLDivElement>(null);
-  refArray[3] = useRef<HTMLDivElement>(null);
-  const [section, setSection] = useState(refArray[0])
+    function scrollToNextSection(ref: Ref) {
+        ref?.current?.scrollIntoView({ behavior: "smooth" });
+    }
 
-  function setNextSection(){
-    setSection(prev => refArray[(refArray.findIndex((e)=>e === prev) + 1) % 4])
-    console.log(section)
-  }
+    const { setCurrent } = useSectionContext();
+    const [refs, setRefs] = useState([] as Ref[]);
 
-  function setSectionToIndex(sectionIndex: number){
-    setSection(refArray[sectionIndex])
-    console.log(section)
-  }
+    useEffect(() => {
+        setCurrent({ ref: heroRef, id: 0 });
+        setRefs([heroRef, techRef, projRef, contRef]);
+    }, []);
 
-  function setSectionToRef(ref: Ref | ForwardedRef){
-    setSection(ref as SetStateAction<Ref>)
-    console.log(section)
-  }
+    return (
+        <StyledMain>
+            <NextButton ref={refs} scrollToNextSection={scrollToNextSection} />
+            <Nav ref={refs} scrollToNextSection={scrollToNextSection} />
 
-  return (
-    <StyledMain>
-      <SectionContext.Provider value={{
-          setNextSection,
-          setSectionToIndex,
-          setSectionToRef
-        }}>
-        <NextButton section={section} />
-        <Hero ref={refArray[0]} />
-        <Projects ref={refArray[1]} />
-        <Contacts ref={refArray[2]} />
-
-      </SectionContext.Provider>
-
-    </StyledMain>
-  )
+            <Section ref={heroRef} id={0}>
+                <Hero />
+            </Section>
+            <Section ref={techRef} id={1}>
+                <TechStack />
+            </Section>
+            <Section ref={projRef} id={2}>
+                <Projects />
+            </Section>
+            <Section ref={contRef} id={3}>
+                <Contacts />
+            </Section>
+        </StyledMain>
+    );
 }
 
-export default App
+export default App;

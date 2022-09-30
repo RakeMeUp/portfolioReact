@@ -1,23 +1,31 @@
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import Card from "../components/Card";
-import Section from "../components/Section";
-import { StyledListWrapper } from "./Projects.styles";
+import {
+    StyledCenteredContainer,
+    StyledListWrapper,
+} from "../styles/Projects.styles";
+import { StyledHeader } from "../styles/shared.styles";
 
 type Props = {};
 
-const Projects = forwardRef<HTMLDivElement, Props>((props, ref) => {
+const Projects = () => {
     const [cards, setCards] = useState([1, 2, 3, 4]);
 
     return (
-        <Section ref={ref}>
-            Projects
-            <StyledListWrapper>
-                {cards.map((e) => (
-                    <Card />
-                ))}
-            </StyledListWrapper>
-        </Section>
+        <>
+            <StyledHeader>
+                <h1>Projects</h1>
+                <h2>I have been working on</h2>
+            </StyledHeader>
+            <StyledCenteredContainer>
+                <StyledListWrapper>
+                    {cards.map((e) => (
+                        <Card />
+                    ))}
+                </StyledListWrapper>
+            </StyledCenteredContainer>
+        </>
     );
-});
+};
 
 export default Projects;

@@ -2,13 +2,13 @@ import { StyledHeader } from "../styles/shared.styles";
 
 type Props = {};
 
-const Contacts = () => {
+const TechStack = () => {
     return (
         <StyledHeader>
-            <h1>Contacts</h1>
-            <h2>Hit me up</h2>
+            <h1>tech</h1>
+            <h2>tech stuff</h2>
         </StyledHeader>
     );
 };
 
-export default Contacts;
+export default TechStack;
