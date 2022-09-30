@@ -30,7 +30,9 @@ function App() {
 
     return (
         <StyledMain>
+            {/*@ts-expect-error*/}
             <NextButton ref={refs} scrollToNextSection={scrollToNextSection} />
+            {/*@ts-expect-error*/}
             <Nav ref={refs} scrollToNextSection={scrollToNextSection} />
 
             <Section ref={heroRef} id={0}>
