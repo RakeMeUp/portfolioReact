@@ -22,7 +22,11 @@ const Nav = forwardRef<HTMLDivElement, Props>(
             children: ReactNode;
         }) {
             return (
-                <li onClick={() => scrollToNextSection(ref[index])}>
+                <li
+                    onClick={() => {
+                        scrollToNextSection(ref[index]);
+                    }}
+                >
                     {children}
                 </li>
             );
@@ -41,9 +45,9 @@ const Nav = forwardRef<HTMLDivElement, Props>(
                     </StyledNavButton>
                     <StyledNavMenu>
                         <LiScroll index={0}>Main</LiScroll>
-                        <LiScroll index={1}>Projects</LiScroll>
-                        <LiScroll index={2}>Tech Stack</LiScroll>
-                        <LiScroll index={2}>Contacts</LiScroll>
+                        <LiScroll index={1}>Tech Stack</LiScroll>
+                        <LiScroll index={2}>Projects</LiScroll>
+                        <LiScroll index={3}>Contacts</LiScroll>
                     </StyledNavMenu>
                 </StyledNavContainer>
             </>

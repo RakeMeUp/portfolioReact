@@ -8,11 +8,13 @@ import Nav from "./components/Nav";
 import { Ref } from "./interfaces/Ref";
 import { useSectionContext } from "./contexts/sectionContext";
 import Section from "./components/Section";
+import TechStack from "./sections/TechStack";
 
 function App() {
     const heroRef = useRef(null);
     const projRef = useRef(null);
     const contRef = useRef(null);
+    const techRef = useRef(null);
 
     function scrollToNextSection(ref: Ref) {
         ref?.current?.scrollIntoView({ behavior: "smooth" });
@@ -23,7 +25,7 @@ function App() {
 
     useEffect(() => {
         setCurrent({ ref: heroRef, id: 0 });
-        setRefs([heroRef, projRef, contRef]);
+        setRefs([heroRef, techRef, projRef, contRef]);
     }, []);
 
     return (
@@ -34,10 +36,13 @@ function App() {
             <Section ref={heroRef} id={0}>
                 <Hero />
             </Section>
-            <Section ref={projRef} id={1}>
+            <Section ref={techRef} id={1}>
+                <TechStack />
+            </Section>
+            <Section ref={projRef} id={2}>
                 <Projects />
             </Section>
-            <Section ref={contRef} id={2}>
+            <Section ref={contRef} id={3}>
                 <Contacts />
             </Section>
         </StyledMain>

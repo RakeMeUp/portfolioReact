@@ -35,6 +35,7 @@ export function SectionContextProvider({ children }: { children: ReactNode }) {
             return array[array.length - 1]?.id < array[array.length - 2]?.id;
         });
         console.log(array, "isScr set");
+        console.log(currentSectionId);
     }, [array]);
 
     useEffect(() => {
