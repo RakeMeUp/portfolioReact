@@ -5,14 +5,15 @@ import {
     useState,
     useEffect,
 } from "react";
+import { Ref } from "../interfaces/Ref";
 
 type SectionContext = {
     currentSection: Ref;
-    setCurrentSection: React.Dispatch<React.SetStateAction<Ref>>;
+    currentSectionId: number;
+    setCurrent: (refObj: RefObj) => void;
     setRefArray: (refObj: RefObj) => void;
+    isScrollingUp: boolean;
 };
-type Ref = React.RefObject<HTMLDivElement> | null;
-
 type RefObj = {
     ref: Ref;
     id: number;
@@ -25,6 +26,7 @@ export function useSectionContext() {
 
 export function SectionContextProvider({ children }: { children: ReactNode }) {
     const [currentSection, setCurrentSection] = useState<Ref>(null);
+    const [currentSectionId, setCurrentSectionId] = useState(0);
     const [array, setArray] = useState<RefObj[]>([]);
     const [isScrollingUp, setIsScrollingUp] = useState(false);
 
@@ -32,7 +34,7 @@ export function SectionContextProvider({ children }: { children: ReactNode }) {
         setIsScrollingUp(() => {
             return array[array.length - 1]?.id < array[array.length - 2]?.id;
         });
-        console.log(array);
+        console.log(array, "isScr set");
     }, [array]);
 
     useEffect(() => {
@@ -40,22 +42,26 @@ export function SectionContextProvider({ children }: { children: ReactNode }) {
     }, [isScrollingUp]);
 
     function setRefArray(refObj: RefObj) {
-        if (
-            array[array.length - 1]?.id === 0 &&
-            array[array.length - 2]?.id === 1
-        ) {
+        if (array.length > 1) {
             setArray((prev) => [prev[prev.length - 1], refObj]);
         } else {
             setArray((prev) => [...prev, refObj]);
         }
     }
 
+    function setCurrent({ ref, id }: RefObj) {
+        setCurrentSection(ref);
+        setCurrentSectionId(id);
+    }
+
     return (
         <SectionContext.Provider
             value={{
                 currentSection,
-                setCurrentSection,
+                currentSectionId,
+                setCurrent,
                 setRefArray,
+                isScrollingUp,
             }}
         >
             {children}

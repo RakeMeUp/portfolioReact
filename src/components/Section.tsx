@@ -18,13 +18,12 @@ false,true => DOWN
 
 const Section = forwardRef<HTMLDivElement, Props>(
     ({ children, id }: Props, ref: any) => {
-        const { currentSection, setCurrentSection, setRefArray } =
-            useSectionContext();
+        const { setCurrent, setRefArray } = useSectionContext();
         const isInView = useIsInViewport(ref);
 
         useEffect(() => {
             if (isInView) {
-                setCurrentSection(ref);
+                setCurrent({ ref: ref, id: id });
                 setRefArray({ ref: ref, id: id });
             }
         }, [isInView]);

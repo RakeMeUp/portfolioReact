@@ -18,11 +18,11 @@ function App() {
         ref?.current?.scrollIntoView({ behavior: "smooth" });
     }
 
-    const { setCurrentSection } = useSectionContext();
+    const { setCurrent } = useSectionContext();
     const [refs, setRefs] = useState([] as Ref[]);
 
     useEffect(() => {
-        setCurrentSection(heroRef);
+        setCurrent({ ref: heroRef, id: 0 });
         setRefs([heroRef, projRef, contRef]);
     }, []);
 
