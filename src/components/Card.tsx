@@ -1,16 +1,20 @@
-import {StyledCard} from './Cards.styles'
+import {
+    StyledCard,
+    StyledCardImageContainer,
+    StyledTagScroller,
+} from "../styles/Cards.styles";
 
-type Props = {}
+type Props = {};
 
 const Card = (props: Props) => {
-  return (
-    <StyledCard>
-      <div>placeholder</div>
-      <h1>Card</h1>
-      <p>text</p>
-      <div>tags</div>
-    </StyledCard>
-  )
-}
+    return (
+        <StyledCard>
+            <StyledCardImageContainer>placeholder</StyledCardImageContainer>
+            <h3>Card</h3>
+            <p>text</p>
+            <StyledTagScroller>tags</StyledTagScroller>
+        </StyledCard>
+    );
+};
 
-export default Card
+export default Card;

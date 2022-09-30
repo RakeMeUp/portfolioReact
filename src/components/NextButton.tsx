@@ -1,10 +1,5 @@
-import styled from "styled-components";
 import React from "react";
-
-const StyledFloatingWrapper = styled.div`
-    position: fixed;
-    right: 0;
-`;
+import { StyledFloatingWrapper } from "../styles/NextButton.styles";
 
 type Props = {
     scrollToNextSection: () => void;
@@ -13,7 +8,7 @@ type Props = {
 const NextButton = React.forwardRef(({ scrollToNextSection }: Props, ref) => {
     return (
         <StyledFloatingWrapper>
-            <button onClick={scrollToNextSection}>{"hey"}</button>
+            <button onClick={scrollToNextSection}>Projects</button>
         </StyledFloatingWrapper>
     );
 });

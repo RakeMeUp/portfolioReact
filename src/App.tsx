@@ -1,16 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import styled from "styled-components";
+import { StyledMain } from "./styles/App.styles";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme.styles";
 import NextButton from "./components/NextButton";
 import { useSectionContext } from "./contexts/sectionContext";
 import Contacts from "./sections/Contacts";
 import Hero from "./sections/Hero";
 import Projects from "./sections/Projects";
-
-const StyledMain = styled.main`
-    height: 100vh;
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-`;
 
 type Ref = React.RefObject<HTMLDivElement> | null;
 
@@ -35,14 +31,18 @@ function App() {
     }
 
     return (
-        <StyledMain>
-            <NextButton
-                scrollToNextSection={() => scrollToNextSection(currentSection)}
-            />
-            <Hero ref={heroRef} />
-            <Projects ref={projRef} />
-            <Contacts ref={contRef} />
-        </StyledMain>
+        <ThemeProvider theme={theme}>
+            <StyledMain>
+                <NextButton
+                    scrollToNextSection={() =>
+                        scrollToNextSection(currentSection)
+                    }
+                />
+                <Hero ref={heroRef} />
+                <Projects ref={projRef} />
+                <Contacts ref={contRef} />
+            </StyledMain>
+        </ThemeProvider>
     );
 }
 

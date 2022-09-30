@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode, useEffect, useState } from "react";
 import { useSectionContext } from "../contexts/sectionContext";
 import { useIsInViewport } from "../hooks/useIsInViewport";
-import { StyledSection } from "./Section.styles";
+import { StyledSection } from "../styles/Section.styles";
 
 type Props = {
     children: ReactNode;
