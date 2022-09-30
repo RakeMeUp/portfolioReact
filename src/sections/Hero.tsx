@@ -4,15 +4,13 @@ import { StyledHeader } from "../styles/shared.styles";
 
 type Props = {};
 
-const Hero = forwardRef<HTMLDivElement, Props>((props, ref) => {
+const Hero = () => {
     return (
-        <Section ref={ref}>
-            <StyledHeader>
-                <h1>Hero</h1>
-                <h2>hero stuff</h2>
-            </StyledHeader>
-        </Section>
+        <StyledHeader>
+            <h1>Hero</h1>
+            <h2>hero stuff</h2>
+        </StyledHeader>
     );
-});
+};
 
 export default Hero;

@@ -1,43 +1,45 @@
 import { useRef, useState, useEffect } from "react";
 import { StyledMain } from "./styles/App.styles";
-import { useSectionContext } from "./contexts/sectionContext";
 import NextButton from "./components/NextButton";
 import Contacts from "./sections/Contacts";
 import Hero from "./sections/Hero";
 import Projects from "./sections/Projects";
 import Nav from "./components/Nav";
-
-type Ref = React.RefObject<HTMLDivElement> | null;
+import { Ref } from "./interfaces/Ref";
+import { useSectionContext } from "./contexts/sectionContext";
+import Section from "./components/Section";
 
 function App() {
     const heroRef = useRef(null);
     const projRef = useRef(null);
     const contRef = useRef(null);
 
-    const { initSections, currentSection } = useSectionContext();
-    const [refs, setRefs] = useState<Ref[]>([]);
-
-    useEffect(() => {
-        setRefs([heroRef, projRef, contRef]);
-    }, []);
-
-    useEffect(() => {
-        initSections(refs);
-    }, [refs]);
-
     function scrollToNextSection(ref: Ref) {
         ref?.current?.scrollIntoView({ behavior: "smooth" });
     }
 
+    const { setCurrentSection } = useSectionContext();
+    const [refs, setRefs] = useState([] as Ref[]);
+
+    useEffect(() => {
+        setCurrentSection(heroRef);
+        setRefs([heroRef, projRef, contRef]);
+    }, []);
+
     return (
         <StyledMain>
-            <NextButton
-                scrollToNextSection={() => scrollToNextSection(currentSection)}
-            />
-            <Nav />
-            <Hero ref={heroRef} />
-            <Projects ref={projRef} />
-            <Contacts ref={contRef} />
+            <NextButton ref={refs} scrollToNextSection={scrollToNextSection} />
+            <Nav ref={refs} scrollToNextSection={scrollToNextSection} />
+
+            <Section ref={heroRef} id={0}>
+                <Hero />
+            </Section>
+            <Section ref={projRef} id={1}>
+                <Projects />
+            </Section>
+            <Section ref={contRef} id={2}>
+                <Contacts />
+            </Section>
         </StyledMain>
     );
 }
