@@ -30,6 +30,8 @@ function App() {
 
     return (
         <StyledMain>
+            {/* ignore ref errors, because i send multiple refs in one ref 
+                attribute, and ts doesnt like that. well too bad! */}
             {/*@ts-expect-error*/}
             <NextButton ref={refs} scrollToNextSection={scrollToNextSection} />
             {/*@ts-expect-error*/}

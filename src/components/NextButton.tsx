@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { useSectionContext } from "../contexts/sectionContext";
 import { Ref } from "../interfaces/Ref";
 import { StyledFloatingWrapper } from "../styles/NextButton.styles";
 import downArrow from "/downArrow.svg";
-import upArrow from "/upArrow.svg";
 
 type Props = {
     scrollToNextSection: (ref: Ref) => void;
 };
+
+const buttonPhases = [
+    { text: "", phase: 0 },
+    { text: "Projects", phase: 1 },
+    { text: "Contacts", phase: 2 },
+    { text: "To The Top", phase: 3 },
+];
 
 const NextButton = React.forwardRef(
     ({ scrollToNextSection }: Props, ref: any) => {
@@ -19,25 +26,53 @@ const NextButton = React.forwardRef(
             return refArr[index];
         }
 
-        const buttonStages = [
-            { text: "", icon: downArrow },
-            { text: "Project", icon: "" },
-            { text: "Contacts", icon: "" },
-            { text: "To The Top", icon: upArrow },
-        ];
+        const [phase, setPhase] = useState(0);
+        const [text, setText] = useState("");
+        const buttonRef = useRef(null);
+
+        useEffect(() => {
+            setText(buttonPhases[currentSectionId].text);
+            setPhase(buttonPhases[currentSectionId].phase);
+        }, [currentSectionId]);
 
         return (
-            <StyledFloatingWrapper>
+            <StyledFloatingWrapper phase={phase}>
                 <button
+                    ref={buttonRef}
                     onClick={() => {
                         scrollToNextSection(getNextRef(ref));
                     }}
                 >
-                    {buttonStages[currentSectionId].text &&
-                        buttonStages[currentSectionId].text}
-                    {buttonStages[currentSectionId].icon && (
-                        <img src={buttonStages[currentSectionId].icon} />
-                    )}
+                    <SwitchTransition mode="out-in">
+                        <CSSTransition
+                            classNames="fade"
+                            addEndListener={(node, done) => {
+                                node.addEventListener(
+                                    "transitionend",
+                                    done,
+                                    false
+                                );
+                            }}
+                            key={text}
+                        >
+                            <span key={text}>{text}</span>
+                        </CSSTransition>
+                    </SwitchTransition>
+                    <SwitchTransition mode="out-in">
+                        <CSSTransition
+                            classNames="fade"
+                            addEndListener={(node, done) => {
+                                node.addEventListener(
+                                    "transitionend",
+                                    done,
+                                    false
+                                );
+                            }}
+                            key={phase}
+                        >
+                            <img key={phase} src={downArrow} />
+                        </CSSTransition>
+                    </SwitchTransition>
                 </button>
             </StyledFloatingWrapper>
         );
