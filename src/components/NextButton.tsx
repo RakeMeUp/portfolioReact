@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSectionContext } from "../contexts/sectionContext";
 import { Ref } from "../interfaces/Ref";
 import { StyledFloatingWrapper } from "../styles/NextButton.styles";
+import AnimatedText from "./AnimatedText";
 import downArrow from "/downArrow.svg";
 import upArrow from "/upArrow.svg";
 
 type Props = {
     scrollToNextSection: (ref: Ref) => void;
 };
+
+const buttonStages = [
+    { text: "", icon: downArrow, phase: 0 },
+    { text: "Projects", icon: downArrow, phase: 1 },
+    { text: "Contacts", icon: downArrow, phase: 2 },
+    { text: "To The Top", icon: upArrow, phase: 3 },
+];
 
 const NextButton = React.forwardRef(
     ({ scrollToNextSection }: Props, ref: any) => {
@@ -19,22 +27,26 @@ const NextButton = React.forwardRef(
             return refArr[index];
         }
 
-        const buttonStages = [
-            { text: "", icon: downArrow },
-            { text: "Project", icon: "" },
-            { text: "Contacts", icon: "" },
-            { text: "To The Top", icon: upArrow },
-        ];
+        const [phase, setPhase] = useState(0);
+        const [text, setText] = useState("");
+
+        useEffect(() => {
+            setPhase(0);
+            setText("");
+            setTimeout(() => {
+                setPhase(buttonStages[currentSectionId].phase);
+                setText(buttonStages[currentSectionId].text);
+            }, 100);
+        }, [currentSectionId]);
 
         return (
-            <StyledFloatingWrapper>
+            <StyledFloatingWrapper phase={phase} text={text}>
                 <button
                     onClick={() => {
                         scrollToNextSection(getNextRef(ref));
                     }}
                 >
-                    {buttonStages[currentSectionId].text &&
-                        buttonStages[currentSectionId].text}
+                    <span></span>
                     {buttonStages[currentSectionId].icon && (
                         <img src={buttonStages[currentSectionId].icon} />
                     )}
