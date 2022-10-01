@@ -11,7 +11,7 @@ export const StyledNavContainer = styled.div<navContainerProps>`
     z-index: 10;
     display: flex;
     transform: translateX(-250px);
-    transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-in-out;
 
     ${({ expanded }) =>
         !expanded &&
@@ -31,8 +31,8 @@ export const StyledNavContainer = styled.div<navContainerProps>`
 `;
 
 export const StyledNavButton = styled.div`
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-color: ${({ theme }) => theme.dark.menuBg};
     border-radius: 0 0 0 30px;
     border-width: 0 0 2px 2px;
@@ -42,13 +42,9 @@ export const StyledNavButton = styled.div`
     justify-content: center;
     align-items: center;
 
-    @media (max-width: 370px) {
-        width: 60px;
-        height: 60px;
-        & > img {
-            height: 35px;
-            width: 35px;
-        }
+    & > img {
+        height: 40px;
+        width: 40px;
     }
 `;
 
