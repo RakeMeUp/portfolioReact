@@ -1,13 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 
-const breatheAnimation = keyframes`
- 0% { opacity: 0}
- 100% { opacity: 1; }
- `;
-
 type Props = {
     phase: number;
-    text: string;
 };
 
 export const StyledFloatingWrapper = styled.div<Props>`
@@ -20,12 +14,13 @@ export const StyledFloatingWrapper = styled.div<Props>`
     z-index: 10;
     & > button {
         background: ${({ theme }) => theme.dark.buttonBg};
-        font-size: ${({ theme }) => theme.fontSize.xlarge};
+        font-size: ${({ theme }) => theme.fontSize.large};
         border: 2px solid ${({ theme }) => theme.dark.border};
         box-shadow: ${({ theme }) => theme.boxShadow.strong};
         border-radius: 50px;
-        height: 80px;
-        transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+        height: 70px;
+        transition: width 300ms cubic-bezier(0.23, -1.07, 0.42, 2.29),
+            height 0.3s ease-in-out;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -33,15 +28,37 @@ export const StyledFloatingWrapper = styled.div<Props>`
         & > img {
             width: 45px;
             height: 45px;
+            padding-left: 10px;
+            transform: rotate(0deg);
+            transition: transform 400ms ease-out;
         }
 
-        &:before {
-            content: "";
+        .fade-enter {
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            transform: scale(50%);
         }
 
-        ${({ phase, text }) => {
+        .fade-enter-active {
+            opacity: 1;
+            transform: scale(100%);
+
+            transition: opacity 200ms cubic-bezier(0.13, -1.49, 1, 1.95),
+                transform 200ms cubic-bezier(0.13, -1.49, 1, 1.95);
+        }
+
+        .fade-exit {
+            opacity: 1;
+            transform: scale(100%);
+        }
+
+        .fade-exit-active {
+            opacity: 0;
+            transform: scale(50%);
+            transition: opacity 200ms cubic-bezier(0.13, -1.49, 1, 1.95),
+                transform 200ms cubic-bezier(0.13, -1.49, 1, 1.95);
+        }
+
+        ${({ phase }) => {
             switch (phase) {
                 case 0:
                     return css`
@@ -51,32 +68,23 @@ export const StyledFloatingWrapper = styled.div<Props>`
                         & > img {
                             width: 60px;
                             height: 60px;
+                            padding: 0;
                         }
                     `;
                 case 1:
                 case 2:
                     return css`
-                        width 250px;
-                        & > span {
-                            display: none;
-                        }
-                        &:before{
-                            opacity:1;
-                            content: ${text};
-                        }
-
-
+                        width 220px;
                     `;
                 case 3:
                     return css`
-                        width 300px;
-                        & > span {
-                            animation-name: ${breatheAnimation};
-                            animation-duration: 1s;
-                        }
+                        width 270px;
                         &>img{
-                            padding-left: 10px;
+                            padding-right: 10px;
+                            transform: rotate(180deg);
+
                         }
+
                     `;
             }
         }}

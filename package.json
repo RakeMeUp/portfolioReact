@@ -11,10 +11,12 @@
   "dependencies": {
     "@types/react-router": "^5.1.19",
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-transition-group": "^4.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.1",
     "react-router-dom": "^6.4.1",
+    "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
