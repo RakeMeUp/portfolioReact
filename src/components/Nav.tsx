@@ -6,6 +6,7 @@ import {
 import { useState, forwardRef } from "react";
 import menuSvg from "/menu.svg";
 import { sectionData } from "../data";
+import NavLi from "./NavLi";
 
 type Props = {
     scrollToNextSection: (ref: any) => void;
@@ -14,6 +15,7 @@ type Props = {
 const Nav = forwardRef<HTMLDivElement, Props>(
     ({ scrollToNextSection }: Props, ref: any) => {
         const [isExpanded, setIsExpanded] = useState(false);
+        const [activeLiId, setActiveLiId] = useState(0);
 
         return (
             <>
@@ -29,13 +31,14 @@ const Nav = forwardRef<HTMLDivElement, Props>(
                     <StyledNavMenu>
                         {sectionData.map((section, i) => {
                             return (
-                                <li
-                                    onClick={() => {
-                                        scrollToNextSection(ref[i]);
-                                    }}
-                                >
-                                    {section.navMenuTitle || "default"}
-                                </li>
+                                <NavLi
+                                    ref={ref}
+                                    handleClick={scrollToNextSection}
+                                    index={i}
+                                    section={section}
+                                    activeLiId={activeLiId}
+                                    setActiveLiId={() => setActiveLiId(i)}
+                                />
                             );
                         })}
                     </StyledNavMenu>
