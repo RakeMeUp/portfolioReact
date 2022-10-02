@@ -14,19 +14,19 @@ export const sectionData = [
     {
         title: "Projects",
         subtitle: "that I have been working on...",
-        nextButtonText: "Contacts",
-        navMenuTitle: "Projects",
-    },
-    {
-        title: "Contacts",
-        subtitle: "Hit me up, Brotha!",
         nextButtonText: "Experience",
-        navMenuTitle: "Contacts",
+        navMenuTitle: "Projects",
     },
     {
         title: "Experience",
         subtitle: "yeah, about that...",
-        nextButtonText: "To The Top",
+        nextButtonText: "Contacts",
         navMenuTitle: "Experience",
+    },
+    {
+        title: "Contacts",
+        subtitle: "Hit me up, Brotha!",
+        nextButtonText: "To The Top",
+        navMenuTitle: "Contacts",
     },
 ];

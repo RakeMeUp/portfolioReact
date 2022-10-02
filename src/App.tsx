@@ -36,7 +36,7 @@ function App() {
 
     useEffect(() => {
         setCurrent({ ref: heroRef, index: 0 });
-        setRefs([heroRef, techRef, projRef, contRef, expRef]);
+        setRefs([heroRef, techRef, projRef, expRef, contRef]);
     }, []);
 
     return (
