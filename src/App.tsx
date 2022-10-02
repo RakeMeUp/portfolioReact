@@ -10,7 +10,7 @@ import { useSectionContext } from "./contexts/sectionContext";
 import Section from "./components/Section";
 import TechStack from "./sections/TechStack";
 import { sectionData } from "./data";
-import { StyledHeader } from "./styles/Header.styles";
+import { StyledHeader } from "./styles/App.styles";
 
 function App() {
     const heroRef = useRef(null);
