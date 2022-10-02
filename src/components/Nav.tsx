@@ -3,8 +3,9 @@ import {
     StyledNavContainer,
     StyledNavMenu,
 } from "../styles/Nav.styles";
-import { useState, forwardRef, ReactNode } from "react";
+import { useState, forwardRef } from "react";
 import menuSvg from "/menu.svg";
+import { sectionData } from "../data";
 
 type Props = {
     scrollToNextSection: (ref: any) => void;
@@ -13,24 +14,6 @@ type Props = {
 const Nav = forwardRef<HTMLDivElement, Props>(
     ({ scrollToNextSection }: Props, ref: any) => {
         const [isExpanded, setIsExpanded] = useState(false);
-
-        function LiScroll({
-            index,
-            children,
-        }: {
-            index: number;
-            children: ReactNode;
-        }) {
-            return (
-                <li
-                    onClick={() => {
-                        scrollToNextSection(ref[index]);
-                    }}
-                >
-                    {children}
-                </li>
-            );
-        }
 
         return (
             <>
@@ -44,10 +27,17 @@ const Nav = forwardRef<HTMLDivElement, Props>(
                         <img src={menuSvg} alt="menu" />
                     </StyledNavButton>
                     <StyledNavMenu>
-                        <LiScroll index={0}>Main</LiScroll>
-                        <LiScroll index={1}>Tech Stack</LiScroll>
-                        <LiScroll index={2}>Projects</LiScroll>
-                        <LiScroll index={3}>Contacts</LiScroll>
+                        {sectionData.map((section, i) => {
+                            return (
+                                <li
+                                    onClick={() => {
+                                        scrollToNextSection(ref[i]);
+                                    }}
+                                >
+                                    {section.navMenuTitle || "default"}
+                                </li>
+                            );
+                        })}
                     </StyledNavMenu>
                 </StyledNavContainer>
             </>

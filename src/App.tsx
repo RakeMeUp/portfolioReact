@@ -9,12 +9,15 @@ import { Ref } from "./interfaces/Ref";
 import { useSectionContext } from "./contexts/sectionContext";
 import Section from "./components/Section";
 import TechStack from "./sections/TechStack";
+import { sectionData } from "./data";
+import { StyledHeader } from "./styles/App.styles";
 
 function App() {
     const heroRef = useRef(null);
     const projRef = useRef(null);
     const contRef = useRef(null);
     const techRef = useRef(null);
+    const expRef = useRef(null);
 
     function scrollToNextSection(ref: Ref) {
         ref?.current?.scrollIntoView({ behavior: "smooth" });
@@ -23,9 +26,17 @@ function App() {
     const { setCurrent } = useSectionContext();
     const [refs, setRefs] = useState([] as Ref[]);
 
+    const SECTIONS = [
+        <Hero />,
+        <Projects />,
+        <Contacts />,
+        <TechStack />,
+        <TechStack />,
+    ];
+
     useEffect(() => {
-        setCurrent({ ref: heroRef, id: 0 });
-        setRefs([heroRef, techRef, projRef, contRef]);
+        setCurrent({ ref: heroRef, index: 0 });
+        setRefs([heroRef, techRef, projRef, contRef, expRef]);
     }, []);
 
     return (
@@ -37,18 +48,18 @@ function App() {
             {/*@ts-expect-error*/}
             <Nav ref={refs} scrollToNextSection={scrollToNextSection} />
 
-            <Section ref={heroRef} id={0}>
-                <Hero />
-            </Section>
-            <Section ref={techRef} id={1}>
-                <TechStack />
-            </Section>
-            <Section ref={projRef} id={2}>
-                <Projects />
-            </Section>
-            <Section ref={contRef} id={3}>
-                <Contacts />
-            </Section>
+            {refs.length &&
+                SECTIONS.map((section, i) => {
+                    return (
+                        <Section ref={refs[i]} index={i}>
+                            <StyledHeader>
+                                <h1>{sectionData[i].title}</h1>
+                                <h2>{sectionData[i].subtitle}</h2>
+                            </StyledHeader>
+                            {section}
+                        </Section>
+                    );
+                })}
         </StyledMain>
     );
 }
