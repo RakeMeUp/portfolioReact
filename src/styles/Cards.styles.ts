@@ -26,11 +26,6 @@ export const StyledCard = styled.li`
         font-size: ${({ theme }) => theme.fontSize.large};
         text-align: center;
         margin-top: 15px;
-        outline: 1px solid green;
-    }
-
-    & > p {
-        outline: 1px solid blue;
     }
 `;
 
@@ -45,7 +40,6 @@ export const StyledCardImageContainer = styled.div`
 
 export const StyledTagScroller = styled.div`
     position: absolute;
-    outline: 1px solid yellow;
     display: flex;
     bottom: 15px;
     right: 0;

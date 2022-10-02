@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
 type Props = {
     phase: number;
@@ -7,12 +7,13 @@ type Props = {
 export const StyledFloatingWrapper = styled.div<Props>`
     position: fixed;
     bottom: 35px;
-    outline: 1px solid red;
     width: 100%;
     display: flex;
     justify-content: center;
     z-index: 10;
+    user-select: none;
     & > button {
+        cursor: pointer;
         background: ${({ theme }) => theme.dark.buttonBg};
         font-size: ${({ theme }) => theme.fontSize.large};
         border: 2px solid ${({ theme }) => theme.dark.border};
@@ -24,6 +25,7 @@ export const StyledFloatingWrapper = styled.div<Props>`
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 270px;
 
         & > img {
             width: 45px;
@@ -59,33 +61,30 @@ export const StyledFloatingWrapper = styled.div<Props>`
         }
 
         ${({ phase }) => {
-            switch (phase) {
-                case 0:
-                    return css`
-                        width: 100px;
-                        height: 100px;
-                        border-radius: 150px;
-                        & > img {
-                            width: 60px;
-                            height: 60px;
-                            padding: 0;
-                        }
-                    `;
-                case 1:
-                case 2:
-                    return css`
-                        width 220px;
-                    `;
-                case 3:
-                    return css`
-                        width 270px;
-                        &>img{
-                            padding-right: 10px;
-                            transform: rotate(180deg);
-
-                        }
-
-                    `;
+            if (phase == 0) {
+                return css`
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 150px;
+                    & > img {
+                        width: 60px;
+                        height: 60px;
+                        padding: 0;
+                    }
+                `;
+            }
+            if (phase == 4) {
+                return css`
+                    & > img {
+                        padding-right: 10px;
+                        transform: rotate(180deg);
+                    }
+                `;
+            }
+            if (phase % 2 == 1) {
+                return css`
+                    width: 230px;
+                `;
             }
         }}
     }

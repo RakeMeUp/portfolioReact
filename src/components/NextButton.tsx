@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { useSectionContext } from "../contexts/sectionContext";
 import { sectionData } from "../data";
@@ -23,7 +23,6 @@ const NextButton = React.forwardRef(
 
         const [phase, setPhase] = useState(0);
         const [text, setText] = useState("");
-        const buttonRef = useRef(null);
 
         useEffect(() => {
             setText(sectionData[currentSectionIndex].nextButtonText);
@@ -33,27 +32,11 @@ const NextButton = React.forwardRef(
         return (
             <StyledFloatingWrapper phase={phase}>
                 <button
-                    ref={buttonRef}
                     onClick={() => {
                         scrollToNextSection(getNextRef(ref));
                     }}
                 >
-                    <SwitchTransition mode="out-in">
-                        <CSSTransition
-                            classNames="fade"
-                            addEndListener={(node, done) => {
-                                node.addEventListener(
-                                    "transitionend",
-                                    done,
-                                    false
-                                );
-                            }}
-                            key={text}
-                        >
-                            <span key={text}>{text}</span>
-                        </CSSTransition>
-                    </SwitchTransition>
-                    <SwitchTransition mode="out-in">
+                    <SwitchTransition>
                         <CSSTransition
                             classNames="fade"
                             addEndListener={(node, done) => {
@@ -65,7 +48,22 @@ const NextButton = React.forwardRef(
                             }}
                             key={phase}
                         >
-                            <img key={phase} src={downArrow} />
+                            <span key={text}>{text}</span>
+                        </CSSTransition>
+                    </SwitchTransition>
+                    <SwitchTransition>
+                        <CSSTransition
+                            classNames="fade"
+                            addEndListener={(node, done) => {
+                                node.addEventListener(
+                                    "transitionend",
+                                    done,
+                                    false
+                                );
+                            }}
+                            key={phase}
+                        >
+                            <img key={"img"} src={downArrow} />
                         </CSSTransition>
                     </SwitchTransition>
                 </button>
