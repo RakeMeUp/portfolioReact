@@ -7,7 +7,7 @@ type navContainerProps = {
 export const StyledNavContainer = styled.div<navContainerProps>`
     position: fixed;
     top: 0;
-    right: -250px;
+    right: -210px;
     z-index: 10;
     display: flex;
     transform: translateX(0);
@@ -16,12 +16,12 @@ export const StyledNavContainer = styled.div<navContainerProps>`
     ${({ expanded }) =>
         expanded &&
         css`
-            transform: translateX(-250px);
+            transform: translateX(-210px);
         `}
 
     @media (max-width: 370px) {
-        right: -210px;
-        transform: translateX(-210px);
+        right: -170px;
+        transform: translateX(-170px);
         ${({ expanded }) =>
             !expanded &&
             css`

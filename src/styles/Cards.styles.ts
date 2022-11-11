@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledCard = styled.li`
-    height: 430px;
-    width: 300px;
+    height: 50vh;
+    width: calc(50vh * 0.66);
     flex-shrink: 0;
     position: relative;
     background-color: ${({ theme }) => theme.dark.cardBg};
@@ -31,10 +31,9 @@ export const StyledCard = styled.li`
 
 export const StyledCardImageContainer = styled.div`
     margin: 20px auto 0 auto;
-    border-radius: 15px;
-    width: 260px;
-    height: 200px;
-    box-shadow: ${({ theme }) => theme.boxShadow.weak};
+    width: 100%;
+    /* aspect ratio: 3:2 */
+    padding-top: 66.6%;
     background-color: ${({ theme }) => theme.dark.skeletonBg};
 `;
 

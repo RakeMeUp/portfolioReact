@@ -4,7 +4,7 @@ export const StyledListWrapper = styled.ul`
     display: flex;
     list-style-type: none;
     max-width: 100vw;
-    margin: 0;
+    margin: 5vh 0 0 0;
     padding: 0;
     gap: 30px;
     padding-bottom: 20px;
@@ -14,15 +14,7 @@ export const StyledListWrapper = styled.ul`
     &::-webkit-scrollbar {
         display: none;
     }
-`;
-
-export const StyledCenteredContainer = styled.div`
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @media (max-height: 700px) {
+        margin: 1vh 0 0 0;
+    }
 `;

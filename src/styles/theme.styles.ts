@@ -22,10 +22,10 @@ export const theme = {
         skeletonBg: colors.gray,
     },
     fontSize: {
-        small: "20px",
-        medium: "24px",
-        large: "32px",
-        xlarge: "40px",
+        small: "18px",
+        medium: "20px",
+        large: "24px",
+        xlarge: "32px",
     },
     boxShadow: {
         strong: "0px 10px 10px rgba(0, 0, 0, 0.75)",

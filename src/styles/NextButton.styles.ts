@@ -15,13 +15,12 @@ export const StyledFloatingWrapper = styled.div<Props>`
     & > button {
         cursor: pointer;
         background: ${({ theme }) => theme.dark.buttonBg};
-        font-size: ${({ theme }) => theme.fontSize.large};
+        font-size: ${({ theme }) => theme.fontSize.xlarge};
         border: 2px solid ${({ theme }) => theme.dark.border};
         box-shadow: ${({ theme }) => theme.boxShadow.strong};
         border-radius: 50px;
         height: 70px;
-        transition: width 300ms cubic-bezier(0.23, -1.07, 0.42, 2.29),
-            height 0.3s ease-in-out;
+        transition: width 300ms cubic-bezier(0.23, -1.07, 0.42, 2.29), height 0.3s ease-in-out;
         display: flex;
         justify-content: center;
         align-items: center;
