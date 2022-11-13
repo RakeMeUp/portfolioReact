@@ -12,7 +12,7 @@ const Projects = () => {
         <>
             <StyledListWrapper>
                 {cards.map((e) => (
-                    <Card />
+                    <Card key={e} />
                 ))}
             </StyledListWrapper>
             <TagSearch />

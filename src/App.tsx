@@ -26,13 +26,7 @@ function App() {
     const { setCurrent } = useSectionContext();
     const [refs, setRefs] = useState([] as Ref[]);
 
-    const SECTIONS = [
-        <Hero />,
-        <Projects />,
-        <Contacts />,
-        <TechStack />,
-        <TechStack />,
-    ];
+    const SECTIONS = [<Hero />, <Projects />, <Contacts />, <TechStack />, <TechStack />];
 
     useEffect(() => {
         setCurrent({ ref: heroRef, index: 0 });
@@ -51,7 +45,7 @@ function App() {
             {refs.length &&
                 SECTIONS.map((section, i) => {
                     return (
-                        <Section ref={refs[i]} index={i}>
+                        <Section ref={refs[i]} index={i} key={i}>
                             <StyledHeader>
                                 <h1>{sectionData[i].title}</h1>
                                 <h2>{sectionData[i].subtitle}</h2>
